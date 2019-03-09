@@ -1,4 +1,4 @@
-
+//Puts the fish in the currentCat bag if this or otherCat don't have it
 function putInBag(fishInShop, currentCat, otherCat) {
     for (let i = 0; i < fishInShop.length; i++) {
         const fish = fishInShop[i];
@@ -8,6 +8,7 @@ function putInBag(fishInShop, currentCat, otherCat) {
 
     }
 }
+//Return tru or false if the fish is in the bag of the cat
 function inBag(fish, cat) {
     for (let i = 0; i < cat.bag.length; i++) {
         const fishInBag = cat.bag[i];
@@ -19,19 +20,17 @@ function inBag(fish, cat) {
 }
 
 
-async function grafWalktrougth(currentCat, otherCat, shopsFishInfo, shopsConnInfo) {
-
+async function grafWalktrougt(currentCat, otherCat, shopsFishInfo, shopsConnInfo) {
     let currentShopFishInfo = shopsFishInfo[currentCat.currentShop]
-
     putInBag(currentShopFishInfo[1].split(' '), currentCat, otherCat)
-    let currentMinCat = {
+    let currentMinCat = {//variable to carry on the min time spend by a cat
         bag: [],
         timeSpend: -1,
         currentShop: 0,
     }
     for (let i = 0; i < shopsConnInfo.length; i++) {
         let connInfo = shopsConnInfo[i]
-        if (connInfo[0] === (currentCat.currentShop + 1)) {
+        if (connInfo[0] === (currentCat.currentShop + 1)) {//loop for walk trougt the graff connections
 
             let auxCurrentCat = Object.create(currentCat)
             let auxOtherCat = Object.create(otherCat)
@@ -40,10 +39,9 @@ async function grafWalktrougth(currentCat, otherCat, shopsFishInfo, shopsConnInf
 
             auxCurrentCat.currentShop = (connInfo[1] - 1)
             auxCurrentCat.timeSpend += connInfo[2]
-
-            res = await grafWalktrougth(auxCurrentCat, auxOtherCat, shopsFishInfo, shopsConnInfo)
-
-            //currentMinCat.timeSpend > res.timeSpend
+            //recursive call for wlak trougt all the graff correctly
+            res = await grafWalktrougt(auxCurrentCat, auxOtherCat, shopsFishInfo, shopsConnInfo)
+            //conditions for the minTIme resolution
             if (currentMinCat.timeSpend === -1 || res.bag.length > currentMinCat.bag.length) {
 
                 currentMinCat.timeSpend = res.timeSpend
@@ -86,19 +84,21 @@ module.exports = {
 
         let bcWalk = {}
         let lcWalk = {}
-        //Start in the shop n=1
 
-        bcWalk = await grafWalktrougth(bc, lc, shopsFishInfo, shopsConnInfo)
+        //Start the process with bigCat trougt the graff  
+        bcWalk = await grafWalktrougt(bc, lc, shopsFishInfo, shopsConnInfo)
+        //If collect all possibles fish types don't start the process with littleCat 
         if (bcWalk.bag.length === numTypes) {
             lcWalk = bcWalk
         } else {
-            lcWalk = await grafWalktrougth(lc, bcWalk, shopsFishInfo, shopsConnInfo)
+            //start the littleCat search for lose fishs
+            lcWalk = await grafWalktrougt(lc, bcWalk, shopsFishInfo, shopsConnInfo)
 
         }
         let minTime = 0
-        if(bcWalk.timeSpend >= lcWalk.timeSpend){
+        if (bcWalk.timeSpend >= lcWalk.timeSpend) {
             minTime = bcWalk.timeSpend
-        }else{
+        } else {
             minTime = lcWalk.timeSpend
         }
 
