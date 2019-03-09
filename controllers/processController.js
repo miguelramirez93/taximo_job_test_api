@@ -22,11 +22,8 @@ function inBag(fish, cat) {
 async function grafWalktrougth(currentCat, otherCat, shopsFishInfo, shopsConnInfo) {
 
     let currentShopFishInfo = shopsFishInfo[currentCat.currentShop]
-    console.log('currentCat at Shop ' + (currentCat.currentShop + 1))
 
     putInBag(currentShopFishInfo[1].split(' '), currentCat, otherCat)
-    console.log('currentCat bag after visit ' + (currentCat.currentShop + 1) + ' -> ' + currentCat.bag)
-    console.log('currentCat time spend after visit ' + (currentCat.currentShop + 1) + ' -> ' + currentCat.timeSpend)
     let currentMinCat = {
         bag: [],
         timeSpend: -1,
@@ -90,18 +87,21 @@ module.exports = {
         let bcWalk = {}
         let lcWalk = {}
         //Start in the shop n=1
-        console.log('bc');
 
         bcWalk = await grafWalktrougth(bc, lc, shopsFishInfo, shopsConnInfo)
         if (bcWalk.bag.length === numTypes) {
             lcWalk = bcWalk
         } else {
-            console.log('lc ');
             lcWalk = await grafWalktrougth(lc, bcWalk, shopsFishInfo, shopsConnInfo)
 
         }
+        let minTime = 0
+        if(bcWalk.timeSpend >= lcWalk.timeSpend){
+            minTime = bcWalk.timeSpend
+        }else{
+            minTime = lcWalk.timeSpend
+        }
 
-
-        return { bc: bcWalk, lc: lcWalk }
+        return { bc: bcWalk, lc: lcWalk, minTime: minTime }
     }
 }

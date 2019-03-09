@@ -4,12 +4,13 @@
   "description": "job test",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js"
+    "test": "mocha"
   },
   "author": "MIguel Ramirez",
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "^2.2.3",
+    "assert": "^1.4.1",
     "koa": "^2.7.0",
     "koa-router": "^7.4.0",
     "sequelize": "^4.43.0"
