@@ -5,5 +5,6 @@ const router = new Router ()
 
 //Services Routes declaration's
 router.post('/excercice', excsServices.saveExcercice)
+router.get('/excercice/:id', excsServices.getExcerciceInfo)
 
 module.exports = router.routes()

@@ -4,7 +4,8 @@
   "description": "job test",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node app.js"
   },
   "author": "MIguel Ramirez",
   "license": "ISC",

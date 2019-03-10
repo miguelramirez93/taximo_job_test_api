@@ -17,20 +17,13 @@ module.exports = function (sequelize, DataTypes) {
         n_fishtypes: {
             type: DataTypes.INTEGER,
             allowNull: false
-        },
-        node_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
         }
     }, {
             timestamps: false,
             schema: 'fish',
             tableName: 'excercice'
         });
-    excerciceModel.associate = models => {
-        excerciceModel.hasMany(models.node, { as: 'graff', foreignKey: 'id', sourceKey: 'node_id' })
-
-    }
+    
     return excerciceModel
 };
 

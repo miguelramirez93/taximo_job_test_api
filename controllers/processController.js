@@ -90,7 +90,7 @@ module.exports = {
         //If collect all possibles fish types don't start the process with littleCat 
         if (bcWalk.bag.length === numTypes) {
             lcWalk = bcWalk
-        } else {
+        } else {            
             //start the littleCat search for lose fishs
             lcWalk = await grafWalktrougt(lc, bcWalk, shopsFishInfo, shopsConnInfo)
 
