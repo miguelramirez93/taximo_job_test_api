@@ -94,5 +94,15 @@ module.exports = {
             ctx.status = 500
             ctx.body = responseTempl.getresponseTemplate(error.message, 'error')
         }
+    },
+    async getAllExcerciceInfo(ctx) {
+        try {
+            const excercice = await ctx.app.db.excercice.findAll({})
+            
+            ctx.body = excercice 
+        } catch (error) {
+            ctx.status = 500
+            ctx.body = responseTempl.getresponseTemplate(error.message, 'error')
+        }
     }
 }
