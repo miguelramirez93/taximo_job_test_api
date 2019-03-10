@@ -10,6 +10,7 @@ config.username = process.env.USER_DB
 config.password = process.env.PSS_DB
 config.host = process.env.DB_URL
 config.port = process.env.DB_PORT
+config.dialect = 'postgres'
 const db = {}
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
